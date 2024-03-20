@@ -47,8 +47,8 @@
 .guesses {
     z-index: 2;
     position: absolute;
-    gap: 35px;
-    top: -20px; /* adjust as needed */
+    gap: 28px;
+    top: -23px; /* adjust as needed */
     left: 0; /* adjust as needed */
     display: flex;
     flex-direction: column;
@@ -64,4 +64,6 @@
     position: relative;
     z-index: 2;
     font-size: 40px;
+    gap: 24px;
+    margin-left: 6px;
 }
