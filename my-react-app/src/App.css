@@ -17,7 +17,6 @@
     flex-direction: column;
     width: 80vw;
     height: 350px;
-    background-color: whitesmoke;
     justify-items: center;
     align-content: center;
     margin-top: 20px;
@@ -44,26 +43,12 @@
     background-color: gray;
 }
 
-.guesses {
-    z-index: 2;
-    position: absolute;
-    gap: 28px;
-    top: -23px; /* adjust as needed */
-    left: 0; /* adjust as needed */
+.guessList {
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    margin-top: 20px;
+    padding: 0;
 }
 
-.firstGuess, .secondGuess, .thirdGuess, .fourthGuess, .fifthGuess {
-    align-self: center;
-    justify-self: center;
-    display: flex;
-    position: relative;
-    z-index: 2;
-    font-size: 40px;
-    gap: 24px;
-    margin-left: 6px;
+.guessListItem {
+    
 }
