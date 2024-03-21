@@ -5,7 +5,7 @@ export default function WordResultDisplay({ items }) {
     <div key={index} className={`rowBox${index + 1}`}></div>
   ));
   return (
-    <div>
+    <div className="guessContainer">
       {items.map((itemArray, arrayIndex) => {
         return (
           <ul className="guessList" key={arrayIndex}>
@@ -14,7 +14,10 @@ export default function WordResultDisplay({ items }) {
                 <li
                   className="guessListItem"
                   key={index}
-                  style={{ color: item.color }}
+                  style={{
+                    color: item.color,
+                    backgroundColor: item.background,
+                  }}
                 >
                   {item.letter}
                 </li>
@@ -23,11 +26,6 @@ export default function WordResultDisplay({ items }) {
           </ul>
         );
       })}
-      <div className="resultBoxRow">{boxes}</div>
-      <div className="resultBoxRow">{boxes}</div>
-      <div className="resultBoxRow">{boxes}</div>
-      <div className="resultBoxRow">{boxes}</div>
-      <div className="resultBoxRow">{boxes}</div>
     </div>
   );
 }

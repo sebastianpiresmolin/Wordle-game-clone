@@ -5,64 +5,11 @@ import WordInput from './components/WordInput';
 import WordGuessEvaluator from './components/WordGuessEvaluator';
 
 function App() {
-  const [items, setItems] = useState([
-    [
-      {
-        letter: 'A',
-        color: 'red',
-      },
-      {
-        letter: 'B',
-        color: 'green',
-      },
-      {
-        letter: 'C',
-        color: 'red',
-      },
-      {
-        letter: 'D',
-        color: 'yellow',
-      },
-      {
-        letter: 'E',
-        color: 'red',
-      },
-      {
-        letter: 'F',
-        color: 'red',
-      },
-    ],
-    [
-      {
-        letter: 'A',
-        color: 'red',
-      },
-      {
-        letter: 'B',
-        color: 'green',
-      },
-      {
-        letter: 'C',
-        color: 'red',
-      },
-      {
-        letter: 'D',
-        color: 'yellow',
-      },
-      {
-        letter: 'E',
-        color: 'red',
-      },
-      {
-        letter: 'F',
-        color: 'red',
-      },
-    ],
-  ]);
+  const [items, setItems] = useState([]);
 
   const [correctAnswer, setCorrectAnswer] = useState('APPLES');
 
-  const [userInput, setUserInput] = useState('Hellos');
+  const [userInput, setUserInput] = useState();
 
   useEffect(() => {
     const result = WordGuessEvaluator({ userInput, correctAnswer });

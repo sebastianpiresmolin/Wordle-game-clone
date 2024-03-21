@@ -7,7 +7,7 @@ export default function WordInput({ onCreateItem }) {
       className="GuessForm"
       onSubmit={(ev) => {
         ev.preventDefault();
-        onCreateGuess(text);
+        onCreateItem(text);
       }}
     >
       <input
