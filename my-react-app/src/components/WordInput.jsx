@@ -8,6 +8,7 @@ export default function WordInput({ onCreateItem }) {
       onSubmit={(ev) => {
         ev.preventDefault();
         onCreateItem(text);
+        setText('');
       }}
     >
       <input

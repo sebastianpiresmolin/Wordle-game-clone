@@ -3,6 +3,7 @@ import './App.css';
 import WordResultDisplay from './components/WordResultDisplay';
 import WordInput from './components/WordInput';
 import WordGuessEvaluator from './components/WordGuessEvaluator';
+import GameEnd from './components/GameEnd';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -29,6 +30,7 @@ function App() {
   return (
     <div className="app">
       <h1 className="app_title">Wordle</h1>
+      <GameEnd items={items} />
       <WordResultDisplay items={items} />
       <WordInput onCreateItem={handleCreateGuess} />
     </div>
