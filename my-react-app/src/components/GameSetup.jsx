@@ -1,5 +1,5 @@
 export default function GameSetup({ items }) {
-  if (items.length === 1) {
+  if (items.length === 0) {
     return (
       <div className="gameSetup">
         <h2>Game Setup</h2>

@@ -21,8 +21,16 @@ function App() {
         result,
       ];
       setItems(updatedItems);
+      console.log(updatedItems);
     }
   }, [userInput, correctAnswer]);
+  
+// I had to create a useEffect here because for some reason there are
+//items added to the items array that are not supposed to be there
+//and after trying to find out why i couldnt find the culprit
+  useEffect(() => {
+    setItems([]); 
+  }, []);
 
   function handleCreateGuess(newGuess) {
     setUserInput(newGuess);
@@ -32,7 +40,7 @@ function App() {
     <div className="app">
       <h1 className="app_title">Wordle</h1>
       <GameSetup items={items} />
-      <GameEnd items={items} />
+      <GameEnd items={items} resetItems={() => setItems([])} />
       <WordResultDisplay items={items} />
       <WordInput onCreateItem={handleCreateGuess} />
     </div>
