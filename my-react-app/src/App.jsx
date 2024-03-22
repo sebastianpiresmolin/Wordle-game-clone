@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="app">
       <h1 className="app_title">Wordle</h1>
-      <GameSetup />
+      <GameSetup items={items} />
       <GameEnd items={items} />
       <WordResultDisplay items={items} />
       <WordInput onCreateItem={handleCreateGuess} />
