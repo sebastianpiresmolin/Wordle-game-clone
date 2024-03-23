@@ -5,6 +5,7 @@ import WordInput from './components/WordInput';
 import WordGuessEvaluator from './components/WordGuessEvaluator';
 import GameEnd from './components/GameEnd';
 import GameSetup from './components/GameSetup';
+import GamePointsAndTime from './components/GamePointsAndTime';
 
 function App() {
   const [guesses, setGuess] = useState([]);
@@ -14,6 +15,11 @@ function App() {
   const [userInput, setUserInput] = useState();
 
   const [wordParams, setWordParams] = useState({ length: 6, duplicates: true });
+
+  const [pointsAndTime, setPointsAndTime] = useState({
+    points: 100,
+    time: 60,
+});
 
   useEffect(() => {
     const result = WordGuessEvaluator({ userInput, correctAnswer });
@@ -43,6 +49,11 @@ function App() {
     setWordParams({ ...wordParams, length: newLength });
   }
 
+  function handleResetGuesses() {
+    setGuess([]);
+    setPointsAndTime({ ...pointsAndTime, time: 60 });
+  }
+
   return (
     <div className="app">
       <h1 className="app_title">Wordle</h1>
@@ -51,7 +62,9 @@ function App() {
         onDuplicateButtonClick={handleDuplicateButtonClick}
         onLengthButtonClick={handleWordLengthButtonClick}
       />
-      <GameEnd guesses={guesses} resetGuesses={() => setGuess([])} />
+      <GamePointsAndTime guesses={guesses} pointsAndTime={pointsAndTime} onTimeEnd={(newTime) => setPointsAndTime({...pointsAndTime,
+    time: newTime})} />
+      <GameEnd guesses={guesses} resetGuesses={handleResetGuesses} />
       <WordResultDisplay guesses={guesses} />
       <WordInput onCreateItem={handleCreateGuess} />
     </div>
