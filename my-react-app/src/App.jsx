@@ -19,7 +19,12 @@ function App() {
   const [pointsAndTime, setPointsAndTime] = useState({
     points: 100,
     time: 60,
-});
+  });
+
+  const [result, setResults] = useState({
+    time: 60,
+    points: 100,
+  });
 
   useEffect(() => {
     const result = WordGuessEvaluator({ userInput, correctAnswer });
@@ -54,6 +59,14 @@ function App() {
     setPointsAndTime({ ...pointsAndTime, time: 60 });
   }
 
+  function handleOnTimeEnd(newTime) {
+    const currentPoints = pointsAndTime.points;
+  
+    setPointsAndTime({ ...pointsAndTime, time: 60 });
+    setResults({ time: newTime, points: currentPoints });
+    console.log(result);
+  }
+
   return (
     <div className="app">
       <h1 className="app_title">Wordle</h1>
@@ -62,8 +75,11 @@ function App() {
         onDuplicateButtonClick={handleDuplicateButtonClick}
         onLengthButtonClick={handleWordLengthButtonClick}
       />
-      <GamePointsAndTime guesses={guesses} pointsAndTime={pointsAndTime} onTimeEnd={(newTime) => setPointsAndTime({...pointsAndTime,
-    time: newTime})} />
+      <GamePointsAndTime
+        guesses={guesses}
+        pointsAndTime={pointsAndTime}
+        onTimeEnd={handleOnTimeEnd}
+      />
       <GameEnd guesses={guesses} resetGuesses={handleResetGuesses} />
       <WordResultDisplay guesses={guesses} />
       <WordInput onCreateItem={handleCreateGuess} />
