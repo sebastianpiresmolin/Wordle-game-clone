@@ -1,4 +1,5 @@
-export default function GameEnd({ guesses, resetGuesses }) {
+export default function GameEnd({ guesses, resetGuesses, result }) {
+  // Check if there is a subarray where all objects have the property background: 'lightgreen'
   const allGreen = guesses.some(
     (subArray) =>
       subArray.length > 0 &&
@@ -10,7 +11,7 @@ export default function GameEnd({ guesses, resetGuesses }) {
       <div className="gameEnd">
         <h2>Congratulations!</h2>
         <p>Correct Answer: APPLES</p>
-        <p>Score: 1337</p>
+        <p>Score: {result.points}</p>
         <p>Post to leaderboard -></p>
         <p>Or</p>
         <button onClick={resetGuesses}>Try again</button>
