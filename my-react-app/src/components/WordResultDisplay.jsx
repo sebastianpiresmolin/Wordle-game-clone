@@ -1,4 +1,4 @@
-export default function WordResultDisplay({ items }) {
+export default function WordResultDisplay({ guesses }) {
   const numberOfBoxes = 6;
   // Create an array with 'numberOfBoxes' elements, map over it, and return a div for each
   const boxes = [...Array(numberOfBoxes)].map((_, index) => (
@@ -6,7 +6,7 @@ export default function WordResultDisplay({ items }) {
   ));
   return (
     <div className="guessContainer">
-      {items.map((itemArray, arrayIndex) => {
+      {guesses.map((itemArray, arrayIndex) => {
         return (
           <ul className="guessList" key={arrayIndex}>
             {itemArray.map((item, index) => {

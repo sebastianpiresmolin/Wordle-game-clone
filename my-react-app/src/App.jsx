@@ -7,41 +7,52 @@ import GameEnd from './components/GameEnd';
 import GameSetup from './components/GameSetup';
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [guesses, setGuess] = useState([]);
 
   const [correctAnswer, setCorrectAnswer] = useState('APPLES');
 
   const [userInput, setUserInput] = useState();
 
+  const [wordParams, setWordParams] = useState({ length: 6, duplicates: true });
+
   useEffect(() => {
     const result = WordGuessEvaluator({ userInput, correctAnswer });
     if (Array.isArray(result)) {
-      const updatedItems = [
-        ...items,
-        result,
-      ];
-      setItems(updatedItems);
-      console.log(updatedItems);
+      const updatedGuesses = [...guesses, result];
+      setGuess(updatedGuesses);
+      console.log(updatedGuesses);
     }
   }, [userInput, correctAnswer]);
-  
-// I had to create a useEffect here because for some reason there are
-//items added to the items array that are not supposed to be there
-//and after trying to find out why i couldnt find the culprit
+
+  // I had to create a useEffect here because for some reason there are
+  //guesses added to the guesses array that are not supposed to be there
+  //upon initializing the app and I couldnt find the culprit
   useEffect(() => {
-    setItems([]); 
+    setGuess([]);
   }, []);
 
   function handleCreateGuess(newGuess) {
     setUserInput(newGuess);
   }
 
+  function handleDuplicateButtonClick(newDuplicateValue) {
+    setWordParams({ ...wordParams, duplicates: newDuplicateValue });
+  }
+
+  function handleWordLengthButtonClick(newLength) {
+    setWordParams({ ...wordParams, length: newLength });
+  }
+
   return (
     <div className="app">
       <h1 className="app_title">Wordle</h1>
-      <GameSetup items={items} />
-      <GameEnd items={items} resetItems={() => setItems([])} />
-      <WordResultDisplay items={items} />
+      <GameSetup
+        guesses={guesses}
+        onDuplicateButtonClick={handleDuplicateButtonClick}
+        onLengthButtonClick={handleWordLengthButtonClick}
+      />
+      <GameEnd guesses={guesses} resetGuesses={() => setGuess([])} />
+      <WordResultDisplay guesses={guesses} />
       <WordInput onCreateItem={handleCreateGuess} />
     </div>
   );
