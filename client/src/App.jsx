@@ -36,12 +36,16 @@ function App() {
   // useEffect to evaluate the user input and recieve the result from the evaluator
   // without rendering the result to the DOM (which made react very angry)
   useEffect(() => {
-    const result = WordGuessEvaluator({ userInput, correctAnswer });
-    if (Array.isArray(result)) {
-      const updatedGuesses = [...guesses, result];
-      setGuess(updatedGuesses);
-      console.log(updatedGuesses);
-    }
+    // Send a GET request to your backend
+    fetch(`http://localhost:3000/api/word-guess-evaluator?userInput=${encodeURIComponent(userInput)}&correctAnswer=${encodeURIComponent(correctAnswer)}`)
+      .then(response => response.json())
+      .then(result => {
+        if (Array.isArray(result)) {
+          const updatedGuesses = [...guesses, result];
+          setGuess(updatedGuesses);
+          console.log(updatedGuesses);
+        }
+      })
   }, [userInput, correctAnswer]);
 
   // I had to create a useEffect here because for some reason there are
