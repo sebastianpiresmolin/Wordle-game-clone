@@ -16,7 +16,10 @@ function App() {
   // state for user input from the input field
   const [userInput, setUserInput] = useState();
   // state for word params to be passed to the word generator
-  const [wordParams, setWordParams] = useState({ length: 6, duplicates: true });
+  const [wordParams, setWordParams] = useState({
+    length: 6,
+    duplicates: true,
+  });
   // state for points and time DEFAULTS
   const [pointsAndTime, setPointsAndTime] = useState({
     points: 100,
