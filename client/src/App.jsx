@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import WordResultDisplay from './components/WordResultDisplay';
 import WordInput from './components/WordInput';
-import WordGuessEvaluator from './components/WordGuessEvaluator';
 import GameEnd from './components/GameEnd';
 import GameSetup from './components/GameSetup';
 import GamePointsAndTime from './components/GamePointsAndTime';
@@ -33,21 +32,6 @@ function App() {
   /* ------------------ /STATES ------------------*/
 
   /* ------------------ USE EFFECTS ------------------*/
-  // useEffect to evaluate the user input and recieve the result from the evaluator
-  // without rendering the result to the DOM (which made react very angry)
-  useEffect(() => {
-    // Send a GET request to your backend
-    fetch(`http://localhost:3000/api/word-guess-evaluator?userInput=${encodeURIComponent(userInput)}&correctAnswer=${encodeURIComponent(correctAnswer)}`)
-      .then(response => response.json())
-      .then(result => {
-        if (Array.isArray(result)) {
-          const updatedGuesses = [...guesses, result];
-          setGuess(updatedGuesses);
-          console.log(updatedGuesses);
-        }
-      })
-  }, [userInput, correctAnswer]);
-
   // I had to create a useEffect here because for some reason there are
   //guesses added to the guesses array that are not supposed to be there
   //upon initializing the app and I couldnt find the culprit
@@ -55,8 +39,28 @@ function App() {
     setGuess([]);
   }, []);
 
+  // useEffect to evaluate the user input and recieve the result from the evaluator
+  // without rendering the result to the DOM (which made react very angry)
   useEffect(() => {
-    console.log(result);
+    const fetchResult = async () => {
+      if (userInput !== undefined && correctAnswer !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000/api/word-guess-evaluator?userInput=${encodeURIComponent(
+            userInput
+          )}&correctAnswer=${encodeURIComponent(correctAnswer)}`
+        );
+        const result = await response.json();
+        if (Array.isArray(result)) {
+          setGuess((prevGuesses) => [...prevGuesses, result]);
+        }
+      }
+    };
+  
+    fetchResult();
+  }, [userInput, correctAnswer]);
+
+  useEffect(() => {
+    console.log(guesses);
   }, [result]);
   /* ------------------ /USE EFFECTS ------------------*/
 
@@ -109,7 +113,7 @@ function App() {
         result={result}
       />
       <WordResultDisplay guesses={guesses} />
-      <WordInput onCreateItem={handleCreateGuess} />
+      <WordInput onCreateItem={handleCreateGuess} guesses={guesses} />
     </div>
   );
 }

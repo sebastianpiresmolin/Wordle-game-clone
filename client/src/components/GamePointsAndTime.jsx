@@ -14,7 +14,7 @@ export default function GamePointsAndTime({
 
   useEffect(() => {
     // exit early when we reach 0, when guesses.length === 5, or when allGreen is true
-    if (!timeLeft || guesses.length === 5 || allGreen) {
+    if (!timeLeft || guesses.length === 5 || allGreen ) {
       onTimeEnd(timeLeft);
       setTimeLeft(60);
       return;
