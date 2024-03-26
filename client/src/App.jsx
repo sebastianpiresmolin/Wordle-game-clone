@@ -32,6 +32,7 @@ function App() {
   /* ------------------ /STATES ------------------*/
 
   /* ------------------ USE EFFECTS ------------------*/
+
   // I had to create a useEffect here because for some reason there are
   //guesses added to the guesses array that are not supposed to be there
   //upon initializing the app and I couldnt find the culprit
@@ -39,25 +40,9 @@ function App() {
     setGuess([]);
   }, []);
 
-  // useEffect to evaluate the user input and recieve the result from the evaluator
-  // without rendering the result to the DOM (which made react very angry)
   useEffect(() => {
-    const fetchResult = async () => {
-      if (userInput !== undefined && correctAnswer !== undefined) {
-        const response = await fetch(
-          `http://localhost:3000/api/word-guess-evaluator?userInput=${encodeURIComponent(
-            userInput
-          )}&correctAnswer=${encodeURIComponent(correctAnswer)}`
-        );
-        const result = await response.json();
-        if (Array.isArray(result)) {
-          setGuess((prevGuesses) => [...prevGuesses, result]);
-        }
-      }
-    };
-  
-    fetchResult();
-  }, [userInput, correctAnswer]);
+    fetchWord();
+  }, [wordParams]);
 
   useEffect(() => {
     console.log(guesses);
@@ -65,6 +50,14 @@ function App() {
   /* ------------------ /USE EFFECTS ------------------*/
 
   /* ------------------ FUNCTIONS ------------------*/
+  async function fetchWord() {
+    const response = await fetch(
+      `http://localhost:3000/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
+    );
+    const word = await response.json();
+    setCorrectAnswer(word.toString());
+  }
+
   function handleCreateGuess(newGuess) {
     setUserInput(newGuess);
   }
