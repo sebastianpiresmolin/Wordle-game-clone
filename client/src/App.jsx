@@ -32,6 +32,15 @@ function App() {
   /* ------------------ /STATES ------------------*/
 
   /* ------------------ USE EFFECTS ------------------*/
+  useEffect(() => {
+    async function fetchWord() {
+      const response = await fetch(
+        `http://localhost:3000/api/word-generator=${wordParams.length}&duplicates=${wordParams.duplicates}`
+      );
+      const word = await response.json();
+      setCorrectAnswer(word.toString());
+    }
+  }, [wordParams]);
 
   // I had to create a useEffect here because for some reason there are
   //guesses added to the guesses array that are not supposed to be there
@@ -39,6 +48,26 @@ function App() {
   useEffect(() => {
     setGuess([]);
   }, []);
+
+  // useEffect to evaluate the user input and recieve the result from the evaluator
+  // without rendering the result to the DOM (which made react very angry)
+  useEffect(() => {
+    const fetchResult = async () => {
+      if (userInput !== undefined && correctAnswer !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000/api/word-guess-evaluator?userInput=${encodeURIComponent(
+            userInput
+          )}&correctAnswer=${encodeURIComponent(correctAnswer)}`
+        );
+        const result = await response.json();
+        if (Array.isArray(result)) {
+          setGuess((prevGuesses) => [...prevGuesses, result]);
+        }
+      }
+    };
+
+    fetchResult();
+  }, [userInput, correctAnswer]);
 
   useEffect(() => {
     fetchWord();
@@ -63,11 +92,14 @@ function App() {
   }
 
   function handleDuplicateButtonClick(newDuplicateValue) {
-    setWordParams({ ...wordParams, duplicates: newDuplicateValue });
+    setWordParams((prevParams) => ({
+      ...prevParams,
+      duplicates: newDuplicateValue,
+    }));
   }
 
   function handleWordLengthButtonClick(newLength) {
-    setWordParams({ ...wordParams, length: newLength });
+    setWordParams((prevParams) => ({ ...prevParams, length: newLength }));
   }
 
   function handleResetGuesses() {

@@ -9,7 +9,6 @@ const WORDS_LENGHT_4 = WORDS.filter((word) => word.length === 4);
 const WORDS_LENGHT_5 = WORDS.filter((word) => word.length === 5);
 const WORDS_LENGHT_6 = WORDS.filter((word) => word.length === 6);
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -20,6 +19,8 @@ app.get('/api/word-generator', (req, res) => {
   const length = req.query.length;
   const duplicates = req.query.duplicates;
   console.log(length, duplicates);
+
+  res.json({ length, duplicates });
 });
 
 const port = process.env.PORT || 3000;
