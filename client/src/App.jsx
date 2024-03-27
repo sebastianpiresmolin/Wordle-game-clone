@@ -74,6 +74,10 @@ function App() {
   }, [wordParams]);
 
   useEffect(() => {
+    console.log(correctAnswer);
+  }, [correctAnswer]);
+
+  useEffect(() => {
     console.log(guesses);
   }, [result]);
   /* ------------------ /USE EFFECTS ------------------*/

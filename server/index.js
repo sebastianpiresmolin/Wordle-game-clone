@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import wordGuessEvaluator from './src/wordGuessEvaluator.js';
 import wordListGenerator from './src/wordListGenerator.js';
+import wordGenerator from './src/wordGenerator.js';
 
 const WORDS = wordListGenerator();
 const WORDS_LENGHT_3 = WORDS.filter((word) => word.length === 3);
@@ -16,11 +17,18 @@ app.use(express.json());
 app.get('/api/word-guess-evaluator', wordGuessEvaluator);
 
 app.get('/api/word-generator', (req, res) => {
-  const length = req.query.length;
-  const duplicates = req.query.duplicates;
-  console.log(length, duplicates);
-
-  res.json({ length, duplicates });
+  const length = parseInt(req.query.length);
+  const duplicates = req.query.duplicates === 'true';
+  res.json(
+    wordGenerator(
+      length,
+      duplicates,
+      WORDS_LENGHT_3,
+      WORDS_LENGHT_4,
+      WORDS_LENGHT_5,
+      WORDS_LENGHT_6
+    )
+  );
 });
 
 const port = process.env.PORT || 3000;
