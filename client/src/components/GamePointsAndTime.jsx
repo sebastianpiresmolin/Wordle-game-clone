@@ -13,8 +13,8 @@ export default function GamePointsAndTime({
   const [timeLeft, setTimeLeft] = useState(pointsAndTime.time);
 
   useEffect(() => {
-    // exit early when we reach 0, when guesses.length === 5, or when allGreen is true
-    if (guesses.length === 5 || allGreen ) {
+    // exit early when guesses.length === 5, or when allGreen is true
+    if (guesses.length === 5 || allGreen) {
       onTimeEnd(timeLeft);
       setTimeLeft(0);
       return;
@@ -28,11 +28,13 @@ export default function GamePointsAndTime({
         setTimeLeft(timeLeft + 1);
       }, 1000);
 
-      // clear interval on re-render to avoid memory leaks
+      // clear interval on re-render
       return () => clearInterval(intervalId);
     }
   }, [timeLeft, guesses, allGreen]);
-
+  //behold the conditional of doom
+  //if guesses is not empty and has less than 5 guesses and not allGreen
+  //return the timer
   if (guesses && guesses.length > 0 && guesses.length < 5 && !allGreen) {
     return <div className="timer">{timeLeft}</div>;
   }

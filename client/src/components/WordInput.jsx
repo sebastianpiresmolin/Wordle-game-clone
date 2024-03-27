@@ -1,3 +1,5 @@
+// Input form for user to enter a word guess
+
 import { useState } from 'react';
 
 export default function WordInput({ onCreateItem, guesses }) {

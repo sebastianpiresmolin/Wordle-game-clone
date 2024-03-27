@@ -1,3 +1,6 @@
+//This file contains the function that generates a random word based
+//on the length and if it has duplicates or not.
+
 export default function wordGenerator(
   length,
   hasDuplicates,

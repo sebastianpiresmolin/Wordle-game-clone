@@ -1,3 +1,5 @@
+//Provide the user with options to set up the game before starting.
+
 export default function GameSetup({ guesses, onLengthButtonClick, onDuplicateButtonClick, wordParams }) {
   if (guesses.length === 0) {
     return (

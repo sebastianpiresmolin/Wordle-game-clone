@@ -23,7 +23,6 @@ export default function GameEnd({
       </div>
     );
   } else {
-    // No subarray where all objects have the property background: 'lightgreen'
   }
   if (guesses.length === 5) {
     return (

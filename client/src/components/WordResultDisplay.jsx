@@ -1,3 +1,5 @@
+// map through the guesses array and display the letters in the word with correct colors
+
 export default function WordResultDisplay({ guesses }) {
   return (
     <div className="guessContainer">

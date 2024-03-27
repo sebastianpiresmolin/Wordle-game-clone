@@ -31,7 +31,9 @@ function App() {
   });
   /* ------------------ /STATES ------------------*/
 
-  /* ------------------ USE EFFECTS ------------------*/
+  /* ------------------ FUNCTIONS ------------------*/
+
+  // useEffect to fetch the correct answer from the word generator
   useEffect(() => {
     async function fetchWord() {
       const response = await fetch(
@@ -50,7 +52,6 @@ function App() {
   }, []);
 
   // useEffect to evaluate the user input and recieve the result from the evaluator
-  // without rendering the result to the DOM (which made react very angry)
   useEffect(() => {
     const fetchResult = async () => {
       if (userInput !== undefined && correctAnswer !== undefined) {
@@ -65,13 +66,21 @@ function App() {
         }
       }
     };
-
     fetchResult();
   }, [userInput, correctAnswer]);
 
+  async function fetchWord() {
+    const response = await fetch(
+      `http://localhost:3000/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
+    );
+    const word = await response.json();
+    setCorrectAnswer(word.toString());
+  }
   useEffect(() => {
     fetchWord();
   }, [wordParams]);
+
+  // Console logs DELETE THESE BEFORE DISTRIBUTION
 
   useEffect(() => {
     console.log(correctAnswer);
@@ -80,16 +89,7 @@ function App() {
   useEffect(() => {
     console.log(guesses);
   }, [result]);
-  /* ------------------ /USE EFFECTS ------------------*/
-
-  /* ------------------ FUNCTIONS ------------------*/
-  async function fetchWord() {
-    const response = await fetch(
-      `http://localhost:3000/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
-    );
-    const word = await response.json();
-    setCorrectAnswer(word.toString());
-  }
+  // Console logs DELETE THESE BEFORE DISTRIBUTION
 
   function handleCreateGuess(newGuess) {
     setUserInput(newGuess);
@@ -119,7 +119,7 @@ function App() {
     setPointsAndTime({ ...pointsAndTime, time: 60 });
     setResults({
       time: newTime,
-      points: currentPoints - (result.time * 5) - (guesses.length - 1) * 50,
+      points: currentPoints - result.time * 5 - (guesses.length - 1) * 50,
     });
   }
   /* ------------------ /FUNCTIONS ------------------*/
