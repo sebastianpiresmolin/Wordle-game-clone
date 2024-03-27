@@ -11,7 +11,7 @@ function App() {
   // state for guesses items
   const [guesses, setGuess] = useState([]);
   // state for current correct answer
-  const [correctAnswer, setCorrectAnswer] = useState('LAPTOP');
+  const [correctAnswer, setCorrectAnswer] = useState();
   // state for user input from the input field
   const [userInput, setUserInput] = useState();
   // state for word params to be passed to the word generator
@@ -21,13 +21,13 @@ function App() {
   });
   // state for points and time DEFAULTS
   const [pointsAndTime, setPointsAndTime] = useState({
-    points: 100,
-    time: 60,
+    points: 1000,
+    time: 0,
   });
   // state for result to calculate user score
   const [result, setResults] = useState({
-    time: 60,
-    points: 100,
+    time: 0,
+    points: 1000,
   });
   /* ------------------ /STATES ------------------*/
 
@@ -108,7 +108,9 @@ function App() {
 
   function handleResetGuesses() {
     setGuess([]);
+    setUserInput();
     setPointsAndTime({ ...pointsAndTime, time: 60 });
+    fetchWord();
   }
 
   function handleOnTimeEnd(newTime) {
@@ -117,7 +119,7 @@ function App() {
     setPointsAndTime({ ...pointsAndTime, time: 60 });
     setResults({
       time: newTime,
-      points: currentPoints - (60 - result.time) - (guesses.length - 1) * 5,
+      points: currentPoints - (result.time * 5) - (guesses.length - 1) * 50,
     });
   }
   /* ------------------ /FUNCTIONS ------------------*/
@@ -130,6 +132,7 @@ function App() {
         guesses={guesses}
         onDuplicateButtonClick={handleDuplicateButtonClick}
         onLengthButtonClick={handleWordLengthButtonClick}
+        wordParams={wordParams}
       />
       <GamePointsAndTime
         guesses={guesses}
@@ -140,6 +143,7 @@ function App() {
         guesses={guesses}
         resetGuesses={handleResetGuesses}
         result={result}
+        correctAnswer={correctAnswer}
       />
       <WordResultDisplay guesses={guesses} />
       <WordInput onCreateItem={handleCreateGuess} guesses={guesses} />

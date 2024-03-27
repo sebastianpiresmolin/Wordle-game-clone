@@ -1,4 +1,4 @@
-export default function GameEnd({ guesses, resetGuesses, result }) {
+export default function GameEnd({ guesses, resetGuesses, result}) {
   // Check if there is a subarray where all objects have the property background: 'lightgreen'
   const allGreen = guesses.some(
     (subArray) =>

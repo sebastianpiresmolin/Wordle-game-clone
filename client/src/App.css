@@ -47,3 +47,15 @@
     height: fit-content;
     flex-direction: column;
 }
+
+.duplicateButtons button {
+    margin: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.lengthButtons button {
+    margin: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
