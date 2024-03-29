@@ -17,7 +17,7 @@ export default function GameEnd({
         <h2>Congratulations!</h2>
         <p>Correct Answer: {correctAnswer}</p>
         <p>Score: {result.points}</p>
-        <p>Post to leaderboard -></p>
+        <p>Post to leaderboard</p>
         <p>Or</p>
         <button onClick={resetGuesses}>Try again</button>
       </div>

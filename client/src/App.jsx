@@ -37,7 +37,7 @@ function App() {
   useEffect(() => {
     async function fetchWord() {
       const response = await fetch(
-        `http://localhost:3000/api/word-generator=${wordParams.length}&duplicates=${wordParams.duplicates}`
+        `/api/word-generator=${wordParams.length}&duplicates=${wordParams.duplicates}`
       );
       const word = await response.json();
       setCorrectAnswer(word.toString());
@@ -56,7 +56,7 @@ function App() {
     const fetchResult = async () => {
       if (userInput !== undefined && correctAnswer !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/api/word-guess-evaluator?userInput=${encodeURIComponent(
+          `/api/word-guess-evaluator?userInput=${encodeURIComponent(
             userInput
           )}&correctAnswer=${encodeURIComponent(correctAnswer)}`
         );

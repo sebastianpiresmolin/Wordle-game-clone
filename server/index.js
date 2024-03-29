@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs/promises';
 import wordGuessEvaluator from './src/wordGuessEvaluator.js';
 import wordListGenerator from './src/wordListGenerator.js';
 import wordGenerator from './src/wordGenerator.js';
@@ -13,6 +14,11 @@ const WORDS_LENGHT_6 = WORDS.filter((word) => word.length === 6);
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.get('/', async (req, res) => {
+  const html = await fs.readFile('../client/dist/index.html');
+  res.type('html').send(html);
+});
 
 app.get('/api/word-guess-evaluator', wordGuessEvaluator);
 
@@ -30,6 +36,8 @@ app.get('/api/word-generator', (req, res) => {
     )
   );
 });
+
+app.use('/assets', express.static('../client/dist/assets'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
