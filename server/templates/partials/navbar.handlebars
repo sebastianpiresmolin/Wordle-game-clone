@@ -1,5 +1,9 @@
 <nav>
         <ul class="menuItems">
+            <li class="homeButton"><a href="/">
+                <h1>Wordle</h1>
+                </a>
+                </li>
           {{#each menuItems}}
             <li class="menuItem {{#if this.active}}active{{else}}inactive{{/if}}">
               <a href="{{this.link}}">{{this.label}}</a>
