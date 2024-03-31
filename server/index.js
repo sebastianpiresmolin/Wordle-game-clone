@@ -42,6 +42,7 @@ app.get('/api/word-generator', (req, res) => {
 });
 
 app.use('/assets', express.static('../client/dist/assets'));
+app.use('/src', express.static('../client/src'));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
