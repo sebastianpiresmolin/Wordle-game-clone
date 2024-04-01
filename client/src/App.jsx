@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import './main.css';
 import WordResultDisplay from './components/WordResultDisplay';
 import WordInput from './components/WordInput';
 import GameEnd from './components/GameEnd';
@@ -127,7 +128,6 @@ function App() {
   /* ------------------ RENDER ------------------*/
   return (
     <div className="app">
-      <h1 className="app_title">Wordle</h1>
       <GameSetup
         guesses={guesses}
         onDuplicateButtonClick={handleDuplicateButtonClick}

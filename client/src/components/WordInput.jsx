@@ -31,7 +31,7 @@ export default function WordInput({ onCreateItem, guesses }) {
           }}
         />
         <button className="guessForm__submitButton" type="submit">
-          Try
+          Guess!
         </button>
       </form>
     );

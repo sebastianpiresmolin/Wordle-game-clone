@@ -2,5 +2,56 @@ body,
 html {
   margin: 0;
   padding: 0;
-  background-color: blue;
+  background-color: #032334;
+}
+
+* {
+  font-family: "Roboto Mono", sans-serif;
+}
+
+.menuItems {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0;
+  background-color: #032334;
+  color: white;
+  width: 100vw;
+  height: 150px;
+  list-style: none;
+  margin: 0;
+}
+.menuItems li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.menuItems li a {
+  text-decoration: none;
+  color: white;
+}
+
+.homeButton a {
+  margin-right: 50vw;
+}
+.homeButton a h1 {
+  font-size: 52px;
+  margin: 0;
+}
+
+.redLetter {
+  color: #FF0000;
+}
+
+.greenLetter {
+  color: #00FF00;
+}
+
+.yellowLetter {
+  color: #FFFF00;
 }/*# sourceMappingURL=main.css.map */
