@@ -153,6 +153,7 @@ function App() {
   function handleCreateLeaderboardItem(name) {
     const newItem = {
       text: name,
+      points: result.points,
       guesses: guesses,
       gameStart: startTime,
       gameEnd: endTime,
