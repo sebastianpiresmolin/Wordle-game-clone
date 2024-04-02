@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs/promises';
+import mongoose from 'mongoose';
+import { item } from './src/models.js';
 import { engine } from 'express-handlebars';
 import wordGuessEvaluator from './src/wordGuessEvaluator.js';
 import wordListGenerator from './src/wordListGenerator.js';
@@ -12,6 +13,8 @@ const WORDS_LENGHT_3 = WORDS.filter((word) => word.length === 3);
 const WORDS_LENGHT_4 = WORDS.filter((word) => word.length === 4);
 const WORDS_LENGHT_5 = WORDS.filter((word) => word.length === 5);
 const WORDS_LENGHT_6 = WORDS.filter((word) => word.length === 6);
+
+mongoose.connect('mongo uri');
 
 const app = express();
 app.engine('handlebars', engine());

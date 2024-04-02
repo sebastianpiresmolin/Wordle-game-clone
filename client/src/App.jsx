@@ -9,13 +9,10 @@ import GamePointsAndTime from './components/GamePointsAndTime';
 
 function App() {
   /* ------------------ STATES ------------------*/
-  // state for guesses items
   const [guesses, setGuess] = useState([]);
-  // state for current correct answer
   const [correctAnswer, setCorrectAnswer] = useState();
-  // state for user input from the input field
+
   const [userInput, setUserInput] = useState();
-  // state for word params to be passed to the word generator
   const [wordParams, setWordParams] = useState({
     length: 6,
     duplicates: true,
@@ -30,27 +27,27 @@ function App() {
     time: 0,
     points: 1000,
   });
+
+  const [allGreen, setAllGreen] = useState(false);
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const [endTimeSet, setEndTimeSet] = useState(false);
   /* ------------------ /STATES ------------------*/
 
   /* ------------------ FUNCTIONS ------------------*/
-
-  // useEffect to fetch the correct answer from the word generator
-  useEffect(() => {
-    async function fetchWord() {
-      const response = await fetch(
-        `/api/word-generator=${wordParams.length}&duplicates=${wordParams.duplicates}`
-      );
-      const word = await response.json();
-      setCorrectAnswer(word.toString());
-    }
-  }, [wordParams]);
-
   // I had to create a useEffect here because for some reason there are
   //guesses added to the guesses array that are not supposed to be there
   //upon initializing the app and I couldnt find the culprit
   useEffect(() => {
     setGuess([]);
   }, []);
+
+  useEffect(() => {
+    if (allGreen && !endTimeSet) {
+      handleGameEnd();
+      setEndTimeSet(true);
+    }
+  }, [allGreen, endTimeSet, handleGameEnd]);
 
   // useEffect to evaluate the user input and recieve the result from the evaluator
   useEffect(() => {
@@ -81,6 +78,13 @@ function App() {
     fetchWord();
   }, [wordParams]);
 
+  useEffect(() => {
+    if (allGreen && !endTimeSet) {
+      setEndTime(new Date());
+      setEndTimeSet(true);
+    }
+  }, [allGreen, endTimeSet]);
+
   // Console logs DELETE THESE BEFORE DISTRIBUTION
 
   useEffect(() => {
@@ -90,9 +94,23 @@ function App() {
   useEffect(() => {
     console.log(guesses);
   }, [result]);
+
+  useEffect(() => {
+    console.log('start time', startTime);
+  }, [startTime]);
+
+  useEffect(() => {
+    console.log('end time', endTime);
+  }, [endTime]);
   // Console logs DELETE THESE BEFORE DISTRIBUTION
 
   function handleCreateGuess(newGuess) {
+    if (guesses.length === 0) {
+      setStartTime(new Date());
+    }
+    if (allGreen) {
+      setEndTime(new Date());
+    }
     setUserInput(newGuess);
   }
 
@@ -109,9 +127,16 @@ function App() {
 
   function handleResetGuesses() {
     setGuess([]);
+    setEndTimeSet(false);
     setUserInput();
     setPointsAndTime({ ...pointsAndTime, time: 60 });
     fetchWord();
+  }
+
+  function handleGameEnd() {
+    if (!endTime) { // Only set the end time if it's not already set
+      setEndTime(new Date());
+    }
   }
 
   function handleOnTimeEnd(newTime) {
@@ -144,6 +169,7 @@ function App() {
         resetGuesses={handleResetGuesses}
         result={result}
         correctAnswer={correctAnswer}
+        handleGameEnd={handleGameEnd}
       />
       <WordResultDisplay guesses={guesses} />
       <WordInput onCreateItem={handleCreateGuess} guesses={guesses} />
