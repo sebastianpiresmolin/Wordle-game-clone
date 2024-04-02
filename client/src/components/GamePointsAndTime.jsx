@@ -36,6 +36,6 @@ export default function GamePointsAndTime({
   //if guesses is not empty and has less than 5 guesses and not allGreen
   //return the timer
   if (guesses && guesses.length > 0 && guesses.length < 5 && !allGreen) {
-    return <div className="timer">{timeLeft}</div>;
+    return <div className="timer"><h2>Time: {timeLeft}</h2></div>;
   }
 }

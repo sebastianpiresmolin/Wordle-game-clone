@@ -14,12 +14,12 @@ export default function GameEnd({
   if (allGreen) {
     return (
       <div className="gameEnd">
-        <h2>Congratulations!</h2>
-        <p>Correct Answer: {correctAnswer}</p>
-        <p>Score: {result.points}</p>
-        <p>Post to leaderboard</p>
-        <p>Or</p>
-        <button onClick={resetGuesses}>Try again</button>
+        <h1>Congratulations!</h1>
+        <h2>Correct Answer: {correctAnswer}</h2>
+        <h3>Score: {result.points}</h3>
+        <h2>Post to leaderboard</h2>
+        <h3>Or</h3>
+        <button onClick={resetGuesses} className="gameOverButton">Try again</button>
       </div>
     );
   } else {
@@ -27,9 +27,9 @@ export default function GameEnd({
   if (guesses.length === 5) {
     return (
       <div className="gameEnd">
-        <h2>Game Over</h2>
-        <p>Correct Answer: {correctAnswer}</p>
-        <button onClick={resetGuesses}>Try again?</button>
+        <h1>Game Over</h1>
+        <h2>Correct Answer: {correctAnswer}</h2>
+        <button onClick={resetGuesses} className="gameOverButton">Try again?</button>
       </div>
     );
   }
