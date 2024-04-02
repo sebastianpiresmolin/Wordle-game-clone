@@ -1,3 +1,4 @@
+import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -14,7 +15,8 @@ const WORDS_LENGHT_4 = WORDS.filter((word) => word.length === 4);
 const WORDS_LENGHT_5 = WORDS.filter((word) => word.length === 5);
 const WORDS_LENGHT_6 = WORDS.filter((word) => word.length === 6);
 
-mongoose.connect('mongo uri');
+config();
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 app.engine('handlebars', engine());
