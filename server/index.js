@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { item } from './src/models.js';
+import { highscore } from './src/models.js';
 import { engine } from 'express-handlebars';
 import wordGuessEvaluator from './src/wordGuessEvaluator.js';
 import wordListGenerator from './src/wordListGenerator.js';
@@ -46,8 +46,18 @@ app.get('/api/word-generator', (req, res) => {
   );
 });
 
+app.post('/api/leaderboard', async (req, res) => {
+  const highscoreData = req.body;
+  console.log(req.body);
+
+  const highscoreModel = new highscore(highscoreData);
+  await highscoreModel.save();
+
+  res.status(201).json(highscoreData);
+});
+
 app.use('/assets', express.static('../client/dist/assets'));
 app.use('/src', express.static('../client/src'));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5080;
 app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -50,6 +50,7 @@ function App() {
   }, [allGreen, endTimeSet, handleGameEnd]);
 
   // useEffect to evaluate the user input and recieve the result from the evaluator
+  // as it is now its easy to cheat by looking at the url in the browser
   useEffect(() => {
     const fetchResult = async () => {
       if (userInput !== undefined && correctAnswer !== undefined) {
@@ -69,7 +70,7 @@ function App() {
 
   async function fetchWord() {
     const response = await fetch(
-      `http://localhost:3000/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
+      `/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
     );
     const word = await response.json();
     setCorrectAnswer(word.toString());
@@ -148,6 +149,24 @@ function App() {
       points: currentPoints - result.time * 5 - (guesses.length - 1) * 50,
     });
   }
+
+  function handleCreateLeaderboardItem(name) {
+    const newItem = {
+      text: name,
+      guesses: guesses,
+      gameStart: startTime,
+      gameEnd: endTime,
+      settings: wordParams,
+    };
+
+    fetch('/api/leaderboard', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    });
+  }
   /* ------------------ /FUNCTIONS ------------------*/
 
   /* ------------------ RENDER ------------------*/
@@ -170,6 +189,7 @@ function App() {
         result={result}
         correctAnswer={correctAnswer}
         handleGameEnd={handleGameEnd}
+        onCreateItem={handleCreateLeaderboardItem}
       />
       <WordResultDisplay guesses={guesses} />
       <WordInput onCreateItem={handleCreateGuess} guesses={guesses} />

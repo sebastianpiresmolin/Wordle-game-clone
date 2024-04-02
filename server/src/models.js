@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-const item = mongoose.model('Item', {
-  name: String,
+const highscore = mongoose.model('Highscore', {
+  text: String,
   guesses: Array,
   gameStart: Date,
   gameEnd: Date,
@@ -11,4 +11,4 @@ const item = mongoose.model('Item', {
   },
 });
 
-export { item };
+export { highscore };
