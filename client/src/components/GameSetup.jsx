@@ -1,11 +1,23 @@
-//Provide the user with options to set up the game before starting.
+import React, { useState } from 'react';
 
 export default function GameSetup({
   guesses,
   onLengthButtonClick,
   onDuplicateButtonClick,
-  wordParams,
 }) {
+  const [activeLength, setActiveLength] = useState(6);
+  const [activeDuplicate, setActiveDuplicate] = useState(true);
+
+  const handleLengthButtonClick = (length) => {
+    setActiveLength(length);
+    onLengthButtonClick(length);
+  };
+
+  const handleDuplicateButtonClick = (allowDuplicate) => {
+    setActiveDuplicate(allowDuplicate);
+    onDuplicateButtonClick(allowDuplicate);
+  };
+
   if (guesses.length === 0) {
     return (
       <div className="gameSetup">
@@ -25,18 +37,32 @@ export default function GameSetup({
         <div className="setupButtons">
           <div className="lengthButtons">
             <h3>Length of word?</h3>
-            <button onClick={() => onLengthButtonClick(3)}>3</button>
-            <button onClick={() => onLengthButtonClick(4)}>4</button>
-            <button onClick={() => onLengthButtonClick(5)}>5</button>
-            <button onClick={() => onLengthButtonClick(6)}>6</button>
+            {[3, 4, 5, 6].map((length) => (
+              <button
+                key={length}
+                className={length === activeLength ? 'active' : ''}
+                onClick={() => handleLengthButtonClick(length)}
+              >
+                {length}
+              </button>
+            ))}
           </div>
           <div className="duplicateButtons">
             <h3>Allow duplicates?</h3>
-            <button onClick={() => onDuplicateButtonClick(true)}>Yes</button>
-            <button onClick={() => onDuplicateButtonClick(false)}>No</button>
+            {[true, false].map((allowDuplicate) => (
+              <button
+                key={allowDuplicate}
+                className={allowDuplicate === activeDuplicate ? 'active' : ''}
+                onClick={() => handleDuplicateButtonClick(allowDuplicate)}
+              >
+                {allowDuplicate ? 'Yes' : 'No'}
+              </button>
+            ))}
           </div>
         </div>
-        <h3 className="setupStartGame">The game and timer starts upon your first guess</h3>
+        <h3 className="setupStartGame">
+          The game and timer starts upon your first guess
+        </h3>
       </div>
     );
   }
