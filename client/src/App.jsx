@@ -135,7 +135,8 @@ function App() {
   }
 
   function handleGameEnd() {
-    if (!endTime) { // Only set the end time if it's not already set
+    if (!endTime) {
+      // Only set the end time if it's not already set
       setEndTime(new Date());
     }
   }
