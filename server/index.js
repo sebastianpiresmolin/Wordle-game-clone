@@ -35,7 +35,7 @@ const MENU = [
   },
 ];
 
-async function renderNavbar(res, page) {
+async function renderPage(res, page) {
   const currentPath = page == 'index' ? '/' : `/${page}`;
   res.render(page, {
     menuItems: MENU.map((item) => {
@@ -90,7 +90,11 @@ async function renderLeaderboard(res, page) {
 }
 
 app.get('/', async (req, res) => {
-  renderNavbar(res, 'index');
+  renderPage(res, 'index');
+});
+
+app.get('/about', async (req, res) => {
+  renderPage(res, 'about');
 });
 
 app.get('/api/word-guess-evaluator', wordGuessEvaluator);

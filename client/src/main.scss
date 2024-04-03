@@ -134,3 +134,30 @@ html {
 .leaderboardButtons button.active {
   border: 2px solid white;
 }
+
+.aboutBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: fit-content;
+}
+
+.aboutText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 70vw;
+  height: fit-content;
+  background-color: #032334;
+  color: white;
+  text-align: justify;
+  h1 {
+    font-size: 52px;
+  }
+  p {
+    font-size: 32px;
+  }
+}

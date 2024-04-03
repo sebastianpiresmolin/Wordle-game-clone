@@ -134,4 +134,33 @@ html {
 
 .leaderboardButtons button.active {
   border: 2px solid white;
+}
+
+.aboutBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.aboutText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 70vw;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #032334;
+  color: white;
+  text-align: justify;
+}
+.aboutText h1 {
+  font-size: 52px;
+}
+.aboutText p {
+  font-size: 32px;
 }/*# sourceMappingURL=main.css.map */
