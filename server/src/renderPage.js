@@ -13,8 +13,8 @@ export default async function renderPage(res, page) {
 
 const MENU = [
   {
-    label: 'Leaderboards',
-    link: '/leaderboards',
+    label: 'Leaderboard',
+    link: '/leaderboard',
   },
   {
     label: 'About',

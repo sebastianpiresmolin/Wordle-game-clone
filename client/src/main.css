@@ -45,13 +45,93 @@ html {
 }
 
 .redLetter {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .greenLetter {
-  color: #00FF00;
+  color: #00ff00;
 }
 
 .yellowLetter {
-  color: #FFFF00;
+  color: #ffff00;
+}
+
+.highscoreBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.highscoreBox ol {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: -moz-fit-content;
+  width: fit-content;
+  gap: 40px;
+}
+.highscoreBox ol li {
+  color: white;
+  width: 500px;
+  align-content: center;
+  text-align: center;
+  font-size: 32px;
+}
+.highscoreBox h1 {
+  color: white;
+  font-size: 52px;
+}
+.highscoreBox h2 {
+  color: white;
+  font-size: 32px;
+}
+
+.leaderboardButtons button {
+  margin: 20px;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #144a68;
+  color: white;
+  border-radius: 10px;
+  border-style: none;
+}
+
+#highscores_3 {
+  display: none;
+}
+
+#highscores_4 {
+  display: none;
+}
+
+#highscores_5 {
+  display: none;
+}
+
+#highscores_6 {
+  display: none;
+}
+
+#highscores_3.active {
+  display: flex;
+}
+
+#highscores_4.active {
+  display: flex;
+}
+
+#highscores_5.active {
+  display: flex;
+}
+
+#highscores_6.active {
+  display: flex;
+}
+
+.leaderboardButtons button.active {
+  border: 2px solid white;
 }/*# sourceMappingURL=main.css.map */

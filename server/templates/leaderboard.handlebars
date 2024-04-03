@@ -1,0 +1,46 @@
+<div class='highscoreBox'>
+  <h1 class='leaderboardTitle'>Leaderboard</h1>
+  <h2>Filter by length:</h2>
+  <div class='leaderboardButtons'>
+    <button id='leaderboard_button_3' class='active'>3</button>
+    <button id='leaderboard_button_4'>4</button>
+    <button id='leaderboard_button_5'>5</button>
+    <button id='leaderboard_button_6'>6</button>
+  </div>
+  <ol id='highscores_3' class="active">
+    {{#each highscores_3}}
+      <li>
+        {{name}}:
+        {{points}}
+        Points
+      </li>
+    {{/each}}
+  </ol>
+  <ol id='highscores_4'>
+    {{#each highscores_4}}
+      <li>
+        {{name}}:
+        {{points}}
+        Points
+      </li>
+    {{/each}}
+  </ol>
+  <ol id='highscores_5'>
+    {{#each highscores_5}}
+      <li>
+        {{name}}:
+        {{points}}
+        Points
+      </li>
+    {{/each}}
+  </ol>
+  <ol id='highscores_6'>
+    {{#each highscores_6}}
+      <li>
+        {{name}}:
+        {{points}}
+        Points
+      </li>
+    {{/each}}
+  </ol>
+</div>

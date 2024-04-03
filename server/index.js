@@ -7,7 +7,6 @@ import { engine } from 'express-handlebars';
 import wordGuessEvaluator from './src/wordGuessEvaluator.js';
 import wordListGenerator from './src/wordListGenerator.js';
 import wordGenerator from './src/wordGenerator.js';
-import renderPage from './src/renderPage.js';
 
 const WORDS = wordListGenerator();
 const WORDS_LENGHT_3 = WORDS.filter((word) => word.length === 3);
@@ -25,8 +24,73 @@ app.set('views', './templates');
 app.use(cors());
 app.use(express.json());
 
+const MENU = [
+  {
+    label: 'Leaderboard',
+    link: '/leaderboard',
+  },
+  {
+    label: 'About',
+    link: '/about',
+  },
+];
+
+async function renderNavbar(res, page) {
+  const currentPath = page == 'index' ? '/' : `/${page}`;
+  res.render(page, {
+    menuItems: MENU.map((item) => {
+      return {
+        active: currentPath == item.link,
+        label: item.label,
+        link: item.link,
+      };
+    }),
+  });
+}
+
+async function renderLeaderboard(res, page) {
+  const currentPath = page == 'index' ? '/' : `/${page}`;
+  res.render(page, {
+    menuItems: MENU.map((item) => {
+      return {
+        active: currentPath == item.link,
+        label: item.label,
+        link: item.link,
+      };
+    }),
+    highscores_3: highscores_3
+      .map((score) => score.toObject())
+      .map((score) => ({
+        name: score.text,
+        points: score.points,
+        length: score.settings.length,
+      })),
+    highscores_4: highscores_4
+      .map((score) => score.toObject())
+      .map((score) => ({
+        name: score.text,
+        points: score.points,
+        length: score.settings.length,
+      })),
+    highscores_5: highscores_5
+      .map((score) => score.toObject())
+      .map((score) => ({
+        name: score.text,
+        points: score.points,
+        length: score.settings.length,
+      })),
+    highscores_6: highscores_6
+      .map((score) => score.toObject())
+      .map((score) => ({
+        name: score.text,
+        points: score.points,
+        length: score.settings.length,
+      })),
+  });
+}
+
 app.get('/', async (req, res) => {
-  renderPage(res, 'index');
+  renderNavbar(res, 'index');
 });
 
 app.get('/api/word-guess-evaluator', wordGuessEvaluator);
@@ -44,6 +108,32 @@ app.get('/api/word-generator', (req, res) => {
       WORDS_LENGHT_6
     )
   );
+});
+
+let highscores_3, highscores_4, highscores_5, highscores_6;
+
+async function fetchHighscores() {
+  highscores_3 = await highscore
+    .find({ 'settings.length': 3 })
+    .sort({ score: -1 })
+    .limit(10);
+  highscores_4 = await highscore
+    .find({ 'settings.length': 4 })
+    .sort({ score: -1 })
+    .limit(10);
+  highscores_5 = await highscore
+    .find({ 'settings.length': 5 })
+    .sort({ score: -1 })
+    .limit(10);
+  highscores_6 = await highscore
+    .find({ 'settings.length': 6 })
+    .sort({ score: -1 })
+    .limit(10);
+}
+
+app.get('/leaderboard', async (req, res) => {
+  await fetchHighscores();
+  renderLeaderboard(res, 'leaderboard');
 });
 
 app.post('/api/leaderboard', async (req, res) => {
