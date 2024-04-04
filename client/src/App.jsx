@@ -53,11 +53,9 @@ function App() {
   // as it is now its easy to cheat by looking at the url in the browser
   useEffect(() => {
     const fetchResult = async () => {
-      if (userInput !== undefined && correctAnswer !== undefined) {
+      if (userInput !== undefined) {
         const response = await fetch(
-          `/api/word-guess-evaluator?userInput=${encodeURIComponent(
-            userInput
-          )}&correctAnswer=${encodeURIComponent(correctAnswer)}`
+          `/api/word-guess-evaluator?userInput=${encodeURIComponent(userInput)}`
         );
         const result = await response.json();
         if (Array.isArray(result)) {
@@ -66,13 +64,13 @@ function App() {
       }
     };
     fetchResult();
-  }, [userInput, correctAnswer]);
+  }, [userInput]); // Remove correctAnswer from the dependency array
 
   async function fetchWord() {
     const response = await fetch(
       `/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
     );
-    const word = await response.json();
+    const word = await response.text();
     setCorrectAnswer(word.toString());
   }
   useEffect(() => {

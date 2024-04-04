@@ -14,6 +14,8 @@ const WORDS_LENGHT_4 = WORDS.filter((word) => word.length === 4);
 const WORDS_LENGHT_5 = WORDS.filter((word) => word.length === 5);
 const WORDS_LENGHT_6 = WORDS.filter((word) => word.length === 6);
 
+export let correctAnswer;
+
 config();
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -102,16 +104,18 @@ app.get('/api/word-guess-evaluator', wordGuessEvaluator);
 app.get('/api/word-generator', (req, res) => {
   const length = parseInt(req.query.length);
   const duplicates = req.query.duplicates === 'true';
-  res.json(
-    wordGenerator(
-      length,
-      duplicates,
-      WORDS_LENGHT_3,
-      WORDS_LENGHT_4,
-      WORDS_LENGHT_5,
-      WORDS_LENGHT_6
-    )
+  correctAnswer = wordGenerator(
+    length,
+    duplicates,
+    WORDS_LENGHT_3,
+    WORDS_LENGHT_4,
+    WORDS_LENGHT_5,
+    WORDS_LENGHT_6
   );
+  console.log(correctAnswer);
+
+  // Send the generated word as a response
+  res.send(correctAnswer);
 });
 
 let highscores_3, highscores_4, highscores_5, highscores_6;

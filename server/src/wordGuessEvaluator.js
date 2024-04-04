@@ -1,8 +1,8 @@
 // This function takes in a user's input and the correct answer and
 //returns an array of objects that represent the evaluation of the user's input.
-
+import { correctAnswer } from '../index.js';
 const wordGuessEvaluator = (req, res) => {
-  const { userInput, correctAnswer } = req.query;
+  const { userInput } = req.query;
 
   if (!userInput || !correctAnswer) {
     return res.json([]);
