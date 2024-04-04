@@ -47,7 +47,7 @@ export default function GameEnd({
             }}
           />
           <button className="leaderboard__submitButton" type="submit">
-            Guess!
+            Submit!
           </button>
         </form>
         <h3>Or</h3>

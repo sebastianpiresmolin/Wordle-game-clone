@@ -50,7 +50,6 @@ function App() {
   }, [allGreen, endTimeSet, handleGameEnd]);
 
   // useEffect to evaluate the user input and recieve the result from the evaluator
-  // as it is now its easy to cheat by looking at the url in the browser
   useEffect(() => {
     const fetchResult = async () => {
       if (userInput !== undefined) {
@@ -64,19 +63,21 @@ function App() {
       }
     };
     fetchResult();
-  }, [userInput]); // Remove correctAnswer from the dependency array
+  }, [userInput]);
 
-  async function fetchWord() {
-    const response = await fetch(
-      `/api/word-generator?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
+  // generate word on backend
+  async function generateWord() {
+    await fetch(
+      `/api/generate-word?length=${wordParams.length}&duplicates=${wordParams.duplicates}`
     );
-    const word = await response.text();
-    setCorrectAnswer(word.toString());
   }
+
+  //call generateWord when wordParams (game settings) change
   useEffect(() => {
-    fetchWord();
+    generateWord();
   }, [wordParams]);
 
+  // useEffect to check if all guesses are correct
   useEffect(() => {
     if (allGreen && !endTimeSet) {
       setEndTime(new Date());
@@ -84,25 +85,8 @@ function App() {
     }
   }, [allGreen, endTimeSet]);
 
-  // Console logs DELETE THESE BEFORE DISTRIBUTION
 
-  useEffect(() => {
-    console.log(correctAnswer);
-  }, [correctAnswer]);
-
-  useEffect(() => {
-    console.log(guesses);
-  }, [result]);
-
-  useEffect(() => {
-    console.log('start time', startTime);
-  }, [startTime]);
-
-  useEffect(() => {
-    console.log('end time', endTime);
-  }, [endTime]);
-  // Console logs DELETE THESE BEFORE DISTRIBUTION
-
+  // function to handle the creation of a guess and save times
   function handleCreateGuess(newGuess) {
     if (guesses.length === 0) {
       setStartTime(new Date());
@@ -129,13 +113,18 @@ function App() {
     setEndTimeSet(false);
     setUserInput();
     setPointsAndTime({ ...pointsAndTime, time: 60 });
-    fetchWord();
+    generateWord();
   }
 
-  function handleGameEnd() {
+  // function to handle the end of the game. This function will set the end time
+  // and fetch the correct answer from the backend after the game ends
+  // so that the user can see the correct answer but not before the game ends
+  async function handleGameEnd() {
     if (!endTime) {
-      // Only set the end time if it's not already set
       setEndTime(new Date());
+      const correctAnswer = await fetch('/api/correct-answer');
+      const newCorrectAnswer = await correctAnswer.text();
+      setCorrectAnswer(newCorrectAnswer);
     }
   }
 

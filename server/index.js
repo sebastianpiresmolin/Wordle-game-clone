@@ -101,7 +101,7 @@ app.get('/about', async (req, res) => {
 
 app.get('/api/word-guess-evaluator', wordGuessEvaluator);
 
-app.get('/api/word-generator', (req, res) => {
+app.get('/api/generate-word', (req, res) => {
   const length = parseInt(req.query.length);
   const duplicates = req.query.duplicates === 'true';
   correctAnswer = wordGenerator(
@@ -113,8 +113,10 @@ app.get('/api/word-generator', (req, res) => {
     WORDS_LENGHT_6
   );
   console.log(correctAnswer);
+  res.send('Word Generated');
+});
 
-  // Send the generated word as a response
+app.get('/api/correct-answer', (req, res) => {
   res.send(correctAnswer);
 });
 
@@ -151,7 +153,7 @@ app.post('/api/leaderboard', async (req, res) => {
   const highscoreModel = new highscore(highscoreData);
   await highscoreModel.save();
 
-  res.status(201).json(highscoreData);
+  res.json(highscoreData);
 });
 
 app.use('/assets', express.static('../client/dist/assets'));
