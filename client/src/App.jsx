@@ -77,6 +77,10 @@ function App() {
     generateWord();
   }, [wordParams]);
 
+  useEffect(() => {
+    console.log(endTime);
+  }, [endTime]);
+
   // useEffect to check if all guesses are correct
   useEffect(() => {
     if (allGreen && !endTimeSet) {
@@ -84,7 +88,6 @@ function App() {
       setEndTimeSet(true);
     }
   }, [allGreen, endTimeSet]);
-
 
   // function to handle the creation of a guess and save times
   function handleCreateGuess(newGuess) {
@@ -114,6 +117,7 @@ function App() {
     setUserInput();
     setPointsAndTime({ ...pointsAndTime, time: 60 });
     generateWord();
+    setEndTime();
   }
 
   // function to handle the end of the game. This function will set the end time
@@ -122,10 +126,10 @@ function App() {
   async function handleGameEnd() {
     if (!endTime) {
       setEndTime(new Date());
-      const correctAnswer = await fetch('/api/correct-answer');
-      const newCorrectAnswer = await correctAnswer.text();
-      setCorrectAnswer(newCorrectAnswer);
     }
+    const correctAnswer = await fetch('/api/correct-answer');
+    const newCorrectAnswer = await correctAnswer.text();
+    setCorrectAnswer(newCorrectAnswer);
   }
 
   function handleOnTimeEnd(newTime) {
