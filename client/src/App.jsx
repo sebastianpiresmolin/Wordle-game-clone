@@ -8,6 +8,9 @@ import GameSetup from './components/GameSetup';
 import GamePointsAndTime from './components/GamePointsAndTime';
 
 function App() {
+  //
+  //
+  //
   /* ------------------ STATES ------------------*/
   const [guesses, setGuess] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState();
@@ -33,15 +36,20 @@ function App() {
   const [endTime, setEndTime] = useState();
   const [endTimeSet, setEndTimeSet] = useState(false);
   /* ------------------ /STATES ------------------*/
-
+  //
+  //
+  //
   /* ------------------ FUNCTIONS ------------------*/
   // I had to create a useEffect here because for some reason there are
   //guesses added to the guesses array that are not supposed to be there
-  //upon initializing the app and I couldnt find the culprit
+  //upon initializing the app and I couldnt find the culprit.
+  //Maybe its only in the dev environment
   useEffect(() => {
     setGuess([]);
   }, []);
 
+  // useEffect to check if all guesses are correct
+  // and if so, set the end time and call handleGameEnd
   useEffect(() => {
     if (allGreen && !endTimeSet) {
       handleGameEnd();
@@ -49,7 +57,7 @@ function App() {
     }
   }, [allGreen, endTimeSet, handleGameEnd]);
 
-  // useEffect to evaluate the user input and recieve the result from the evaluator
+  // evaluate the user input and recieve the result from the evaluator
   useEffect(() => {
     const fetchResult = async () => {
       if (userInput !== undefined) {
@@ -77,11 +85,7 @@ function App() {
     generateWord();
   }, [wordParams]);
 
-  useEffect(() => {
-    console.log(endTime);
-  }, [endTime]);
-
-  // useEffect to check if all guesses are correct
+  // check if all guesses are correct
   useEffect(() => {
     if (allGreen && !endTimeSet) {
       setEndTime(new Date());
