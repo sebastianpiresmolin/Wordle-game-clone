@@ -61,7 +61,8 @@ export default function GameSetup({
           </div>
         </div>
         <h3 className="setupStartGame">
-          The game and timer starts upon your first guess
+          The game and timer starts upon your first guess<br></br>
+          You got 5 guesses to get the word right
         </h3>
       </div>
     );

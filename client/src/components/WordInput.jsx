@@ -9,7 +9,6 @@ export default function WordInput({ onCreateItem, guesses }) {
       subArray.every((item) => item.background === 'lightgreen')
   );
 
-
   const [text, setText] = useState('');
   if (allGreen || guesses.length >= 5) {
     return null;
@@ -31,6 +30,7 @@ export default function WordInput({ onCreateItem, guesses }) {
         onChange={(ev) => {
           setText(ev.target.value);
         }}
+        required
       />
       <button className="guessForm__submitButton" type="submit">
         Guess!

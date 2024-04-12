@@ -45,6 +45,7 @@ export default function GameEnd({
             onChange={(ev) => {
               setText(ev.target.value);
             }}
+            required
           />
           <button className="leaderboard__submitButton" type="submit">
             Submit!

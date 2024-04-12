@@ -94,7 +94,7 @@ function App() {
   }, [allGreen, endTimeSet]);
 
   // function to handle the creation of a guess and save times
-  function handleCreateGuess(newGuess) {
+  async function handleCreateGuess(newGuess) {
     if (guesses.length === 0) {
       setStartTime(new Date());
     }
@@ -102,6 +102,11 @@ function App() {
       setEndTime(new Date());
     }
     setUserInput(newGuess);
+    if (guesses.length <= 5) {
+      const correctAnswer = await fetch('/api/correct-answer');
+      const newCorrectAnswer = await correctAnswer.text();
+      setCorrectAnswer(newCorrectAnswer);
+    }
   }
 
   function handleDuplicateButtonClick(newDuplicateValue) {
